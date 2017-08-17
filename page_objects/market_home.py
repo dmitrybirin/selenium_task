@@ -1,6 +1,6 @@
 from page_objects.base_page import BasePage
 
-class YandexMarketHome(BasePage):
+class MarketHome(BasePage):
     def __init__(self, driver_wrapper):
         super().__init__(driver_wrapper)
         self.electronika_link_selector = "li[data-department='Электроника'] a"
