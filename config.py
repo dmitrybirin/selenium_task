@@ -1,0 +1,1 @@
+CLICK_TIMEOUT = 30
