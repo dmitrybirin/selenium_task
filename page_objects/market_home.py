@@ -1,4 +1,5 @@
 from page_objects.base_page import BasePage
+from page_objects.mobile_devices import MobileDevices
 
 class MarketHome(BasePage):
     def __init__(self, driver_wrapper):
@@ -13,3 +14,4 @@ class MarketHome(BasePage):
 
     def click_on_mobile_devices(self):
         self.click_element_by_name(self.submenu_items_selector, self.mobile_devices_text)
+        return MobileDevices(self.driver_wrapper)
