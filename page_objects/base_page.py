@@ -18,6 +18,9 @@ class BasePage(object):
         el = el_group.find_element_by_link_text(text)
         el.click()
 
+    def get_count_of_elements_by_selector(self, selector):
+        return len(self.find_group_of_elements_by_selector(selector))
+
     def click_element_in_element_by_selector(self, parentElement, selector):
         el = parentElement.find_element(By.CSS_SELECTOR, selector)
         el.click()
@@ -71,7 +74,7 @@ class BasePage(object):
             try:
                 text_element = el.find_element(By.CSS_SELECTOR, text_selector)
             except NoSuchElementException as e: 
-                print('No element with selector {} was found in {}'.format(text_selector, el))
+                print('No element with selector {} was found in {} element'.format(text_selector, el.tag_name))
                 pass
             if text in text_element.text:
                 return el
