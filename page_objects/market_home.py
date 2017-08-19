@@ -4,14 +4,13 @@ from page_objects.mobile_devices import MobileDevices
 class MarketHome(BasePage):
     def __init__(self, driver_wrapper):
         super().__init__(driver_wrapper)
-        self.electronika_link_selector = "li[data-department='Электроника'] a"
+        self.electronika_link_selector_template = "li[data-department='%s'] a"
         self.submenu_items_selector = "div.topmenu__sublist"
-        self.mobile_devices_text = "Мобильные телефоны"
         
-    def choose_electronic_menu(self):
-        self.hover_element(self.electronika_link_selector)
+    def choose_main_menu_item(self, name):
+        self.hover_element(self.electronika_link_selector_template % name)
         return self
 
-    def click_on_mobile_devices(self):
-        self.click_element_by_name(self.submenu_items_selector, self.mobile_devices_text)
+    def click_on_submenu_item(self, name):
+        self.click_element_by_name(self.submenu_items_selector, name)
         return MobileDevices(self.driver_wrapper)

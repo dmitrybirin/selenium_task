@@ -13,6 +13,8 @@ class MobileDevices(BasePage):
 
     def change_filter_to_by_name(self, name, text):
         FilterBlock(self.driver_wrapper, name).open_block_if_closed().change_text_inputs(to=text)
+        return self
     
     def change_filter_from_by_name(self, name, text):
         FilterBlock(self.driver_wrapper, name).open_block_if_closed().change_text_inputs(fr=text)
+        return self

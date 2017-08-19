@@ -9,6 +9,7 @@ yandex_url = 'https://yandex.ru'
 DriverWrapper('chrome') \
 .go_to(yandex_url, Home) \
 .go_to_market() \
-.choose_electronic_menu() \
-.click_on_mobile_devices() \
-.change_filter_to_by_name("Диагональ экрана", '2000') \
+.choose_main_menu_item('Электроника') \
+.click_on_submenu_item('Мобильные телефоны') \
+.change_filter_to_by_name('Цена', '20000') \
+.change_filter_from_by_name('Диагональ экрана', '3')
