@@ -21,4 +21,4 @@ class MobileDevices(BasePage):
         return self
 
     def get_count_of_found_elements(self):
-        return self, self.get_count_of_elements_by_selector(self.found_element_selector)
+        return self.get_count_of_elements_by_selector(self.found_element_selector)
