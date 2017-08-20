@@ -1,5 +1,5 @@
 from page_objects.base_page import BasePage
-from page_objects.filter_block import FilterBlock
+from page_objects.filter_block import FilterBlockInputs, FilterBlockCheckboxes
 
 
 class MobileDevices(BasePage):
@@ -9,11 +9,15 @@ class MobileDevices(BasePage):
         self.found_element_selector = "div.snippet-cell"
 
     def change_filter_to_by_name(self, name, text):
-        FilterBlock(self.driver_wrapper, name).open_block_if_closed().change_text_inputs(to=text)
+        FilterBlockInputs(self.driver_wrapper, name).open_block_if_closed().change_text_inputs(to=text)
+        return self
+
+    def check_random_visible_checkboxes(self, name, number):
+        FilterBlockCheckboxes(self.driver_wrapper, name).open_block_if_closed().check_random_visible_checkboxes(number)
         return self
     
     def change_filter_from_by_name(self, name, text):
-        FilterBlock(self.driver_wrapper, name).open_block_if_closed().change_text_inputs(fr=text)
+        FilterBlockInputs(self.driver_wrapper, name).open_block_if_closed().change_text_inputs(fr=text)
         return self
 
     def apply_filters(self):

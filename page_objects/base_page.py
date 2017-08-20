@@ -25,6 +25,9 @@ class BasePage(object):
         el = parentElement.find_element(By.CSS_SELECTOR, selector)
         el.click()
 
+    def get_elements_in_element_by_selector(self, parentElement, selector):
+        return parentElement.find_elements(By.CSS_SELECTOR, selector)
+
     def hover_element(self, selector):
         el = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
         builder = webdriver.ActionChains(self.driver_wrapper.driver)
