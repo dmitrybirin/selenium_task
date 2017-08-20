@@ -22,11 +22,14 @@ class BasePage(object):
         return len(self.find_group_of_elements_by_selector(selector))
 
     def click_element_in_element_by_selector(self, parentElement, selector):
-        el = parentElement.find_element(By.CSS_SELECTOR, selector)
+        el = self.get_one_element_in_element_by_selector(parentElement, selector)
         el.click()
 
     def get_elements_in_element_by_selector(self, parentElement, selector):
         return parentElement.find_elements(By.CSS_SELECTOR, selector)
+
+    def get_one_element_in_element_by_selector(self, parentElement, selector):
+        return parentElement.find_element(By.CSS_SELECTOR, selector)
 
     def hover_element(self, selector):
         el = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
@@ -43,7 +46,6 @@ class BasePage(object):
     def find_group_of_elements_by_selector(self, selector):
         WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
         return self.driver_wrapper.driver.find_elements(By.CSS_SELECTOR, selector)
-
 
     def get_first_element_by_tag_text_in_attr(self, tag, text, attr, parentElement=None):
         """
@@ -69,7 +71,7 @@ class BasePage(object):
             else:
                 if text in attributes:
                     return el
-
+    
     def get_element_contains_text_in_area(self, area_selector, text_selector, text):
         el_group = self.find_group_of_elements_by_selector(area_selector)
         
