@@ -15,7 +15,7 @@ class DriverWrapper():
                 sys.exit(1)    
         except WebDriverException as e:
             print('Cannot get the driver for the {}.\n{}'.format(browser_name.capitalize(), e))
-            print('Probably, you just need to install Chrome Driver in your path: https://chromedriver.storage.googleapis.com/index.html?path=2.31/')
+            print('Try to install Chrome Driver in your path: https://chromedriver.storage.googleapis.com/index.html?path=2.31/')
             sys.exit(1)
 
     def go_to(self, url: str, return_page=None):
