@@ -20,10 +20,12 @@ Need to automate the test scenario with Selemium:
 ## Install
 
 ```
+git clone https://github.com/dmitrybirin/selenium_task.git
+cd selenium_task
 pip install -r requirements.txt
 ```
-If there is no Chrome Driver in the system it should be installed in PATH of your system
-https://chromedriver.storage.googleapis.com/index.html?path=2.31/
+If there is no Chrome Driver in the system it should be installed in PATH
+https://chromedriver.storage.googleapis.com/index.html?path=2.31
 
 ## Run
 
