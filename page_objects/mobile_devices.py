@@ -31,7 +31,7 @@ class MobileDevices(BasePage):
         return self
 
     def change_sorting_by_name(self, name):
-        self.click_element_by_name(self.sort_filter_selector, name)
+        self.click_element_by_link_text(self.sort_filter_selector, name)
         self.wait_until_filtered(self.loading_selector)
         return self
 
@@ -41,7 +41,7 @@ class MobileDevices(BasePage):
         return self
 
     def get_name_of_cell_by_number(self, number):
-        el_group = self.find_group_of_elements_by_selector(self.cell_element_selector)
+        el_group = self.get_group_of_elements_by_selector(self.cell_element_selector)
         el = el_group[number-1]
         title_el = self.get_one_element_in_element_by_selector(el, self.cell_title_selector)
         return title_el.text

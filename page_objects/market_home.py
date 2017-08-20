@@ -12,5 +12,5 @@ class MarketHome(BasePage):
         return self
 
     def click_on_submenu_item(self, name):
-        self.click_element_by_name(self.submenu_items_selector, name)
+        self.click_element_by_link_text(self.submenu_items_selector, name)
         return MobileDevices(self.driver_wrapper)

@@ -9,50 +9,44 @@ class BasePage(object):
     def __init__(self, driver_wrapper):
         self.driver_wrapper = driver_wrapper
 
-    def click_element_by_selector(self, selector):
-        el = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, selector)))
-        el.click()
+    def get_group_of_elements_by_selector(self, selector):
+        """
+        Get all elements by selector
 
-    def click_element_by_name(self, area_selector, text):
-        el_group = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, area_selector)))
-        el = el_group.find_element_by_link_text(text)
-        el.click()
+        Args:
+            selector (str): css selector of the elements to find
+        """
+        WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
+        return self.driver_wrapper.driver.find_elements(By.CSS_SELECTOR, selector)
 
     def get_count_of_elements_by_selector(self, selector):
-        return len(self.find_group_of_elements_by_selector(selector))
+        """
+        Get count of the elements
 
-    def click_element_in_element_by_selector(self, parentElement, selector):
-        el = self.get_one_element_in_element_by_selector(parentElement, selector)
-        el.click()
+        Args:
+            selector (str): css selector
+        """
+        return len(self.get_group_of_elements_by_selector(selector))
 
     def get_elements_in_element_by_selector(self, parentElement, selector):
+        """
+        Search for all elements within parent element and return it
+
+        Args:
+            parentElement (WebElement): parent element, where all elements should be found
+            selector (str): css selector of the element to find
+        """
         return parentElement.find_elements(By.CSS_SELECTOR, selector)
 
     def get_one_element_in_element_by_selector(self, parentElement, selector):
+        """
+        Search for the first element within parent element and return it
+
+        Args:
+            parentElement (WebElement): parent element, where element should be found
+            selector (str): css selector of the element to find
+        """
         return parentElement.find_element(By.CSS_SELECTOR, selector)
-
-    def hover_element_by_selector(self, selector):
-        el = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
-        builder = webdriver.ActionChains(self.driver_wrapper.driver)
-        builder.move_to_element(el).perform()
-    
-    def hover_element_by_element(self, element):
-        builder = webdriver.ActionChains(self.driver_wrapper.driver)
-        builder.move_to_element(element).perform()
-
-    def send_text_by_selector(self, selector, text):
-        el = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
-        el.send_keys(text)
-
-    def wait_until_filtered(self, selector):
-        WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until_not(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
-
-    def send_text_by_element(self, element, text):
-        element.send_keys(text)
-
-    def find_group_of_elements_by_selector(self, selector):
-        WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
-        return self.driver_wrapper.driver.find_elements(By.CSS_SELECTOR, selector)
 
     def get_first_element_by_tag_text_in_attr(self, tag, text, attr, parentElement=None):
         """
@@ -80,7 +74,15 @@ class BasePage(object):
                     return el
     
     def get_element_contains_text_in_area(self, area_selector, text_selector, text):
-        el_group = self.find_group_of_elements_by_selector(area_selector)
+        """
+        Get the first element in group with the with specific text within specific area
+
+        Args:
+            area_selector (str): selector to find area of elements to search
+            text_selector (str): element that should contain text to search
+            text (str): text to search
+        """
+        el_group = self.get_group_of_elements_by_selector(area_selector)
         for el in el_group:
             try:
                 text_element = el.find_element(By.CSS_SELECTOR, text_selector)
@@ -89,3 +91,77 @@ class BasePage(object):
                 pass
             if text in text_element.text:
                 return el
+
+    def hover_element_by_selector(self, selector):
+        """
+        Hover mouse upon the element with selector
+
+        Args:
+            selector (str): css selector of the element to find
+        """
+        el = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
+        builder = webdriver.ActionChains(self.driver_wrapper.driver)
+        builder.move_to_element(el).perform()
+    
+    def click_element_by_selector(self, selector):
+        """
+        Click element by selector with waiting to be clickable
+
+        Args:
+            selector (str): css selector
+        """
+        el = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, selector)))
+        el.click()
+
+    def click_element_by_link_text(self, area_selector, text):
+        """
+        Click element by link text in some area
+
+        Args:
+            area_selector (str): css selector of the area for link
+            text (str): text to find
+        """
+        el_group = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, area_selector)))
+        el = el_group.find_element_by_link_text(text)
+        el.click()
+
+    def click_element_in_element_by_selector(self, parentElement, selector):
+        """
+        Search for element within parent element and click it
+
+        Args:
+            parentElement (WebElement): parent element, where next element should be found
+            selector (str): css selector of the element to click
+        """
+        el = self.get_one_element_in_element_by_selector(parentElement, selector)
+        el.click()
+
+    def send_text_by_selector(self, selector, text):
+        """
+        Send text to the element by selector
+
+        Args:
+            selector (str): css selector of the element to find
+            text (str): text to send to the element
+        """
+        el = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
+        el.send_keys(text)
+    
+    def send_text_by_element(self, element, text):
+        """
+        Send text to the element
+
+        Args:
+            element (WebElement): element to send text
+            text (str): text to send to the element
+        """
+        element.send_keys(text)
+
+    def wait_until_filtered(self, selector):
+        """
+        Waiting for the element with selector will disappear
+
+        Args:
+            selector (str): css selector of the element to wait
+        """
+        WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until_not(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
