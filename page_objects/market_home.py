@@ -8,7 +8,7 @@ class MarketHome(BasePage):
         self.submenu_items_selector = "div.topmenu__sublist"
         
     def choose_main_menu_item(self, name):
-        self.hover_element(self.electronika_link_selector_template % name)
+        self.hover_element_by_selector(self.electronika_link_selector_template % name)
         return self
 
     def click_on_submenu_item(self, name):

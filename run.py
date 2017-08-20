@@ -14,10 +14,11 @@ filteredResults = DriverWrapper('chrome') \
 .change_filter_to_by_name('Цена', '20000') \
 .change_filter_from_by_name('Диагональ экрана', '3') \
 .check_random_visible_checkboxes('Производитель', 5) \
-.apply_filters() \
-.get_name_of_cell_by_number(1)
+.apply_filters()
 
 count = filteredResults.get_count_of_found_elements()
 print(count)
 
+cell_name = filteredResults.get_name_of_cell_by_number(1)
 filteredResults.change_sorting_by_name("по цене")
+filteredResults.click_cell_element_by_name(cell_name)

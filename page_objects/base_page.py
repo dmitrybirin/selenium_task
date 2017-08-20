@@ -31,14 +31,21 @@ class BasePage(object):
     def get_one_element_in_element_by_selector(self, parentElement, selector):
         return parentElement.find_element(By.CSS_SELECTOR, selector)
 
-    def hover_element(self, selector):
+    def hover_element_by_selector(self, selector):
         el = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
         builder = webdriver.ActionChains(self.driver_wrapper.driver)
         builder.move_to_element(el).perform()
+    
+    def hover_element_by_element(self, element):
+        builder = webdriver.ActionChains(self.driver_wrapper.driver)
+        builder.move_to_element(element).perform()
 
     def send_text_by_selector(self, selector, text):
         el = WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
         el.send_keys(text)
+
+    def wait_until_filtered(self, selector):
+        WebDriverWait(self.driver_wrapper.driver, LOCATE_TIMEOUT).until_not(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
 
     def send_text_by_element(self, element, text):
         element.send_keys(text)
@@ -74,7 +81,6 @@ class BasePage(object):
     
     def get_element_contains_text_in_area(self, area_selector, text_selector, text):
         el_group = self.find_group_of_elements_by_selector(area_selector)
-        
         for el in el_group:
             try:
                 text_element = el.find_element(By.CSS_SELECTOR, text_selector)
